@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#121419">
+  <meta name="description" content="SKILLHACK CLUB — выбор игрового компьютера и бронирование времени онлайн.">
+  <title>SKILLHACK CLUB — Бронирование ПК</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Обычные JS-файлы: сайт запускается даже двойным кликом по index.html. -->
+  <script src="js/data.js" defer></script>
+  <script src="js/LocalBookingStore.js" defer></script>
+  <script src="config/firebase-config.js" defer></script>
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#booking">К бронированию</a>
+  <div class="top-line" aria-hidden="true"></div>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="#top" aria-label="SKILLHACK CLUB, на главную"><span>SKILLHACK <b>CLUB</b></span></a>
+      <nav class="nav-links" aria-label="Навигация">
+        <a href="#booking">Забронировать</a>
+        <a href="#bookings">Мои брони</a>
+        <a href="#rules">Как это работает</a>
+      </nav>
+      <a class="header-action" href="#booking">ВЫБРАТЬ ПК <span>↗</span></a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero container">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="status-blink" aria-hidden="true"></span> НОЧНАЯ СМЕНА / ONLINE BOOKING</p>
+        <h1>ТВОЙ СЛОТ<br><span>ТВОЯ ИГРА</span></h1>
+        <p class="hero-description">Выбери компьютер, свободное время и забронируй место без звонков. Просто, быстро, по делу.</p>
+        <div class="hero-tags"><span>01 / ВЫБОР ПК</span><span>02 / ВРЕМЯ</span><span>03 / БРОНЬ</span></div>
+      </div>
+      <div class="hero-display" aria-hidden="true">
+        <div class="display-top"><span>HARDWARE / SYSTEM STATUS</span><span>8 STATIONS</span></div>
+        <div class="display-main">
+          <div class="monitor monitor-back"><div class="monitor-screen"></div></div>
+          <div class="monitor monitor-front"><div class="monitor-screen"><div class="pixel-cross">+</div><div class="monitor-label">READY<br>PLAYER?</div></div></div>
+          <div class="desk-base"></div>
+          <span class="display-asterisk">✳</span>
+        </div>
+        <div class="display-bottom"><span>СКАНИРУЙ. ВЫБИРАЙ. ИГРАЙ.</span><span>CTRL + PLAY_</span></div>
+      </div>
+    </section>
+
+    <section class="booking-section" id="booking" aria-labelledby="booking-title">
+      <div class="container">
+        <div class="section-label"><span>/// БРОНИРОВАНИЕ</span><span>01—03 / SETUP SESSION</span></div>
+        <div class="booking-heading"><div><h2 id="booking-title">ЗАНЯТЬ МЕСТО<span>.</span></h2><p>Всё в одном окне — от станции до подтверждения.</p></div></div>
+        <div class="booking-layout">
+          <div class="booking-steps">
+            <section class="step-card" aria-labelledby="date-title">
+              <header class="step-heading"><span class="step-number">01</span><div><h3 id="date-title">Выбери день</h3><p>Бронирование на ближайшие 7 дней</p></div><span class="step-decoration">DATE / 07</span></header>
+              <div class="date-picker" id="date-picker" aria-label="Выбор даты"></div>
+            </section>
+
+            <section class="step-card" aria-labelledby="pc-title">
+              <header class="step-heading"><span class="step-number">02</span><div><h3 id="pc-title">Выбери компьютер</h3><p>Три категории игровых станций</p></div><span class="step-decoration">STATION / 08</span></header>
+              <div class="category-key"><span><i class="key-standard"></i> STANDARD · 200 ₽/ч</span><span><i class="key-pro"></i> PRO · 350 ₽/ч</span><span><i class="key-vip"></i> VIP · 500 ₽/ч</span></div>
+              <div class="pc-grid" id="pc-grid" role="group" aria-label="Игровые станции"></div>
+            </section>
+
+            <section class="step-card" aria-labelledby="time-title">
+              <header class="step-heading"><span class="step-number">03</span><div><h3 id="time-title">Выбери время</h3><p>Клуб работает с 10:00 до 00:00</p></div><span class="step-decoration">TIME / SLOT</span></header>
+              <div class="duration-row"><span>ДЛИТЕЛЬНОСТЬ:</span><div class="duration-tabs" id="duration-tabs" role="group" aria-label="Продолжительность сеанса"><button type="button" data-duration="1">1 час</button><button type="button" data-duration="2">2 часа</button><button type="button" data-duration="3">3 часа</button></div></div>
+              <div class="slot-grid" id="slot-grid" role="group" aria-label="Доступные интервалы"></div>
+              <p class="slots-note" id="slots-note"><span class="legend-dot available"></span> свободно <span class="legend-dot busy"></span> занято <span class="legend-dot chosen"></span> выбрано</p>
+            </section>
+          </div>
+
+          <aside class="summary-wrap" aria-labelledby="summary-title">
+            <div class="summary-card">
+              <div class="summary-top"><span>YOUR SESSION</span><span class="summary-cross">✳</span></div>
+              <h3 id="summary-title">ТВОЯ БРОНЬ<span>.</span></h3>
+              <div class="summary-lines">
+                <div><span>СТАНЦИЯ</span><strong id="summary-pc">—</strong></div>
+                <div><span>ДАТА</span><strong id="summary-date">—</strong></div>
+                <div><span>ВРЕМЯ</span><strong id="summary-time">Не выбрано</strong></div>
+                <div><span>ДЛИТЕЛЬНОСТЬ</span><strong id="summary-duration">2 часа</strong></div>
+              </div>
+              <div class="summary-price"><span>ИТОГО</span><strong id="summary-price">— ₽</strong></div>
+              <form id="booking-form" novalidate>
+                <label for="nickname">КАК К ТЕБЕ ОБРАЩАТЬСЯ?</label>
+                <input id="nickname" name="nickname" type="text" maxlength="32" minlength="2" autocomplete="nickname" placeholder="Твой никнейм" required>
+                <p class="field-error" id="form-error" role="alert"></p>
+                <button class="reserve-button" id="reserve-button" type="submit" disabled>ЗАБРОНИРОВАТЬ <span>↗</span></button>
+              </form>
+              <p class="summary-disclaimer" id="storage-hint">Проверяем доступность слотов…</p>
+            </div>
+            <div class="side-meta"><span>● 8 игровых ПК</span><span>● от 200 ₽ / час</span><span>● свободный выбор времени</span></div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="my-bookings container" id="bookings" aria-labelledby="my-bookings-title">
+      <div class="section-label"><span>/// ЛИЧНЫЙ КАБИНЕТ</span><span>MY RESERVATIONS</span></div>
+      <div class="my-bookings-head"><div><h2 id="my-bookings-title">МОИ БРОНИ<span>.</span></h2><p>Здесь появятся твои забронированные сеансы.</p></div><button type="button" id="refresh-bookings" class="refresh-btn">ОБНОВИТЬ ↻</button></div>
+      <div id="my-bookings-list" class="my-bookings-list" aria-live="polite"><div class="empty-bookings">Пока нет активных бронирований. Самое время занять место.</div></div>
+    </section>
+
+    <section class="rules-section" id="rules" aria-labelledby="rules-title">
+      <div class="container rules-layout"><div><p class="eyebrow">FAQ / QUICK START</p><h2 id="rules-title">НИЧЕГО<br>ЛИШНЕГО<span>.</span></h2></div><div class="rules-list"><div><span>01</span><p>Выбери дату, свободный компьютер и продолжительность сеанса.</p></div><div><span>02</span><p>Занятое время нельзя выбрать повторно. Система проверяет доступность при подтверждении.</p></div><div><span>03</span><p>После подтверждения бронь появится в разделе «Мои брони». Там её можно отменить.</p></div></div></div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="container footer-layout"><span class="footer-brand">SKILLHACK <b>CLUB</b></span><span>© <span id="year">2026</span> / ALL SYSTEMS READY</span></div></footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <dialog id="confirmation" class="confirmation-dialog" aria-labelledby="confirmation-title"><div class="dialog-line">✓ БРОНИРОВАНИЕ ПОДТВЕРЖДЕНО</div><h2 id="confirmation-title">ТВОЁ МЕСТО<br><span>ГОТОВО.</span></h2><p id="confirmation-text"></p><button type="button" class="reserve-button" id="confirmation-close">ОТЛИЧНО <span>↗</span></button></dialog>
+</body>
+</html>
